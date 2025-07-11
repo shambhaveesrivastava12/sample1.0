@@ -1,0 +1,60 @@
+replicaCount: 1
+
+mongodb:
+  image: mongo
+  tag: latest
+  port: 27017
+  replicaCount: 1
+
+backend:
+  image: shambhaveesrivastava12/todo-backend
+  tag: v9
+  port: 5000
+  replicaCount: 1
+  mongo_url: mongodb://todo-app-mongodb:27017/todos
+
+frontend:
+  image: shambhaveesrivastava12/todo-frontend
+  tag: v2
+  port: 80
+  nodePort: 30080
+  replicaCount: 1
+
+
+serviceAccount:
+  create: false
+
+# service:
+#   type: NodePort
+
+resources: {}
+
+autoscaling:
+  enabled: false
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+nameOverride: ""
+fullnameOverride: ""
+
+# ingress:
+#   enabled: false
+#   className: ""
+#   annotations: {}
+#   hosts:
+#     - host: chart-example.local
+#       paths:
+#         - path: /
+#           pathType: ImplementationSpecific
+#   tls: []
+
+ingress:
+  enabled: true
+  host: todo-app.local
+
+service:
+  type: ClusterIP
+  port: 80
